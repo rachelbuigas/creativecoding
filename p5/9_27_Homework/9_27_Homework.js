@@ -1,6 +1,4 @@
 function setup () {
-	//myVariable is now an int
-	myVariable = 5;
 	createCanvas(600,500);
 }
 
