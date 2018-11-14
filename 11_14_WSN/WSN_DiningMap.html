@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    #map {
+        position: fixed;
+        width: 50%;
+        top: 0;
+        bottom: 0;
+    }
+
+    #features {
+        width: 50%;
+        margin-left: 50%;
+        /*        padding-right: 10%;
+*/
+        font-family: 'Libre Franklin', sans-serif;
+        overflow-y: scroll;
+    }
+
+    section {
+        padding: 100px 40px;
+        line-height: 25px;
+        border-bottom: 1px solid #ddd;
+        opacity: 0.25;
+        font-size: 13px;
+    }
+
+    section.active {
+        opacity: 1;
+
+    }
+
+    section:last-child {
+        border-bottom: none;
+        margin-bottom: 200px;
+    }
+
+    .marker-title {
+        font-weight: 700;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+
+    p {
+        font-size: 14px;
+
+    }
+
+    .marker {
+        background-image: url('https://nyunews.com/wp-content/uploads/2018/11/mapbox-icon.png');
+        background-size: cover;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    .mapboxgl-popup {
+        max-width: 200px;
+    }
+
+    .mapboxgl-popup-content {
+        text-align: center;
+        font-family: 'Libre Franklin', sans-serif;
+    }
+
+    .mapboxgl-popup-content h3 {
+        font-weight: bold;
+    }
+
+
+
+    }
+    </style>
+</head>
+
+<body>
+    <div id='map'></div>
+    <div id='features'>
+        <section id='open' class='active'>
+            <p>While the best part of waking up may not be Folgers in your cup, breakfast comes in a close second. Regarded as the most important meal, sometimes a good egg sandwich is all you need to get cracking at the day ahead. All yolks aside, here are 10 mouth watering breakfast sandwiches to start your day off right.
+            </p>
+        </section>
+        <section id='tompkins'>
+            <h3><b>Tompkins Square Bagels</b></h3>
+            <p><b>184 2nd Ave., New York, NY 10003</b></p>
+            <p>With over 20 types to choose from, the sandwiches at Tompkins Square Bagels lack neither variety nor flavor. But one combination in particular stands above the rest: The Weezer. Generously filled, this enormous bagel consists of bacon, chorizo, egg and cream cheese of your choosing — though cucumber dill is recommended. If you want something more sugary to satisfy your sweet tooth and are willing to take a risk, try out their delicious french toast bagel that pairs surprisingly well with their unique birthday cake or chocolate cookie dough cream cheese.
+            </p>
+        </section>
+        <section id='la'>
+            <h3><b>La Maison Du Croque Monsieur</b></h3>
+            <p><b>17 E. 13th St., New York, NY 10003</b></p>
+            <p>Located near Union Square, this quaint and cozy French restaurant offers tasty sandwiches at affordable prices. For less than $5, the “Bacon Croque” served at La Maison Du Croque Monsieur is simple, yet delicious. As evidenced by its name, the sandwich consists of eggs, bacon and NY cheddar with bread delicately toasted to a golden brown on either side. These sandwiches are the perfect size if you are looking for a quick bite to eat and just need something light to fulfill your breakfast sandwich cravings.
+            </p>
+        </section>
+        <section id='estela'>
+            <h3><b>Estela</b></h3>
+            <p><b>47 E. Houston St., New York, NY 10012</b></p>
+            <p>Love pasta? Love cheese? Love both of them steaming away together inside a parmesan wheel as the chef sprinkles in pepper and — surprise — more cheese, right in front of you? Then order what Cacio e Pepe does best: the cacio e pepe. But if you’re in the mood for a lighter pasta dish, the chilled lemon linguine with shrimp is a citrusy dream.
+            </p>
+        </section>
+        <section id='sunny'>
+            <h3><b>Sunny & Annie’s Deli</b></h3>
+            <p><b>94 Avenue B, New York, NY 10009. </b></p>
+            <p>A delicious secret hides behind the unassuming facade of this family owned deli; freshly made sandwiches with imaginative combinations and high quality ingredients. They offer quirky options, like pho sandwiches, that are all refreshingly original. However they also offer equally appetizing classics, like the “Two Eggs” sandwich, which comes with two fluffy eggs, your choice of meat — bacon, ham or sausage — and cheese on a warm roll or a bagel.
+            </p>
+        </section>
+        <section id='bite'>
+            <h3><b>Bite</b></h3>
+            <p><b>333 Lafayette St., New York, NY 10012</b></p>
+            <p>The “Organic Egg Sandwich” offered at Bite is a twist on the classic bacon egg and cheese with Mediterranean influences. It consists of a fried egg, special hot sauce and plum tomatoes on a soft brioche bun from Balthazar. Some organic cheese and ham can be added for only an extra 50 cents. They have many vegetarian and vegan options and they use organic, fresh ingredients; true to their slogan, they have ‘something for everyone.’
+            </p>
+        </section>
+        <section id='sadelle'>
+            <h3><b>Sadelle’s</b></h3>
+            <p><b>463 W Broadway, New York, NY 10012</b></p>
+            <p>One can never go wrong with a classic bacon egg and cheese. At Sadelle's, the “Classic Egg Sandwich” is buttery, smokey and soft but also crisp — everything one could ask from a breakfast sandwich. It’s made with two runny, fried eggs, savoury bacon and Muenster on crisp challah bread. This is one of the more expensive options on this list, but also one of the most worthwhile.
+            </p>
+        </section>
+        <section id='amy'>
+            <h3><b>Amy’s Bread</b></h3>
+            <p><b>250 Bleecker St, New York, NY 10014</b></p>
+            <p>Although better known for their baked goods, Amy’s Bread has a “Bacon Egg and Cheese on a Soft Roll” on their menu that is sure to make your mouth water. Simple in its presentation, it is made with NY cheddar and local bacon wedged between housemade challah bread. After you finish eating, one of their freshly made sticky buns or croissants makes a sweet, convenient snack to take with you.
+            </p>
+        </section>
+        <section id='court'>
+            <h3><b>Court Street Grocers</b></h3>
+            <p><b>540 LaGuardia Pl, New York, NY 10012</b></p>
+            <p>Groceries aren’t the items for sale at Court Street Grocers; they offer a large selection of grab and go sandwiches of which the “Breakfast Sandwich” has established itself as one of the best. The eggs are lightly scrambled, the cheddar cheese, beautifully melted, and the arugula adds a tang of freshness. To top it off, it has a crunchy ciabatta roll from Balthazar.
+            </p>
+        </section>
+        <section id='miscelanea'>
+            <h3><b>Miscelanea</b></h3>
+            <p><b>63 E 4th St, New York, NY 10003</b></p>
+            <p>Nothing starts a day off better than a “Huevo Con Chorizo Torta” from Miscelanea to bring your taste buds to life. This sandwich is packed with flavor: scrambled eggs, Mexican chorizo, beans, lettuce and crema fresca. Delicious and flavorful, this hidden gem is not to be looked over. It even comes with a side of chips, pickled carrots and peppers.
+            </p>
+        </section>
+        <section id='egg'>
+            <h3><b>Egg Shop</b></h3>
+            <p><b>151 Elizabeth St, New York, NY 10012</b></p>
+            <p>As you can probably tell from its name, the Egg Shop is all about eggs. All of their egg sandwiches are unparalleled, but one in particular rises above the rest: the “Pepper Boy Sandwich.” It’s ingredients combine to create a uniquely piquant experience: scrambled eggs, gruyere, bell pepper, maple cured pepper bacon, caramelized onion aioli on your choice of a bell pepper or panini roll. Though it’s a bit of a trek from NYU, the walk is well worth it for a taste of one of the most delicious egg sandwiches NYC has to offer.
+            </p>
+        </section>
+    </div>
+    <script>
+    mapboxgl.accessToken = 'pk.eyJ1Ijoibnl1bmV3cyIsImEiOiJjam5ubGh0dWswN2o0M3FwZzdqMTZzZnRiIn0.iU43E725gUNyWSZON2zHlw';
+
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/basic-v8',
+        center: [-73.997525, 40.730815],
+        zoom: 13,
+        bearing: 10,
+        pitch: 0
+    });
+
+    var chapters = {
+        'open': {
+            center: [-73.997525, 40.730815],
+            zoom: 13,
+            bearing: 10,
+            pitch: 0
+        },
+        'tompkins': {
+            center: [-73.985811, 40.730654],
+            bearing: 10,
+            zoom: 16.5,
+            speed: 0.7,
+            pitch: 0
+        },
+        'la': {
+            center: [-73.992914, 40.734990],
+            bearing: 10,
+            zoom: 16.5,
+            speed: 0.7,
+            pitch: 0
+        },
+        'estela': {
+            center: [-73.994719, 40.724609],
+            bearing: 10,
+            zoom: 16.5,
+            speed: 0.7,
+            pitch: 0
+        },
+        'sunny': {
+            center: [-73.981643, 40.724626],
+            bearing: 10,
+            zoom: 16.5,
+            speed: 0.7,
+            pitch: 0
+        },
+        'bite': {
+            center: [-73.994685, 40.725672],
+            bearing: 10,
+            zoom: 16.5,
+            speed: 0.7,
+            pitch: 0
+        },
+        'sadelle': {
+            center: [-74.000129, 40.726217],
+            bearing: 10,
+            zoom: 16.5,
+            speed: 0.7,
+            pitch: 0
+        },
+        'amy': {
+            center: [-74.003071, 40.731008],
+            bearing: 10,
+            zoom: 16.5,
+            speed: 0.7,
+            pitch: 0
+        },
+        'court': {
+            center: [-73.998722, 40.728907],
+            bearing: 10,
+            zoom: 16.5,
+            speed: 0.7,
+            pitch: 0
+        },
+        'miscelanea': {
+            center: [-73.990664, 40.726901],
+            bearing: 10,
+            zoom: 16.5,
+            speed: 0.7,
+            pitch: 0
+        },
+        'egg': {
+            center: [-73.995295, 40.720375],
+            bearing: 10,
+            zoom: 16.5,
+            speed: 0.7,
+            pitch: 0
+        }
+    };
+
+    // On every scroll event, check which element is on screen
+    window.onscroll = function() {
+        var chapterNames = Object.keys(chapters);
+        for (var i = 0; i < chapterNames.length; i++) {
+            var chapterName = chapterNames[i];
+            if (isElementOnScreen(chapterName)) {
+                setActiveChapter(chapterName);
+                break;
+            }
+        }
+    };
+
+    var activeChapterName = 'open';
+
+    function setActiveChapter(chapterName) {
+        if (chapterName === activeChapterName) return;
+
+        map.flyTo(chapters[chapterName]);
+
+        document.getElementById(chapterName).setAttribute('class', 'active');
+        document.getElementById(activeChapterName).setAttribute('class', '');
+
+        activeChapterName = chapterName;
+    }
+
+    function isElementOnScreen(id) {
+        var element = document.getElementById(id);
+        var bounds = element.getBoundingClientRect();
+        return bounds.top < window.innerHeight && bounds.bottom > 200;
+    }
+
+    var geojson = {
+        type: 'FeatureCollection',
+        features: [{
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [-73.985811, 40.730654]
+                },
+                properties: {
+                    title: 'Tompkins Square Bagels',
+                    description: '184 2nd Ave, New York, NY 10003'
+                }
+            },
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [-73.992914, 40.734990]
+                },
+                properties: {
+                    title: 'La Maison Du Croque Monsieur',
+                    description: '17 E 13th St, New York, NY 10003'
+                }
+            },
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [-73.994719, 40.724609]
+                },
+                properties: {
+                    title: 'Estela',
+                    description: '47 E Houston St, New York, NY 10012'
+                }
+            },
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [-73.981643, 40.724626]
+                },
+                properties: {
+                    title: 'Sunny & Annie’s Deli',
+                    description: '94 Avenue B, New York, NY 10009'
+                }
+            },
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [-73.994685, 40.725672]
+                },
+                properties: {
+                    title: 'Bite',
+                    description: '333 Lafayette St, New York, NY 10012'
+                }
+            },
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [-74.000129, 40.726217]
+                },
+                properties: {
+                    title: 'Sadelle’s',
+                    description: '463 W Broadway, New York, NY 10012'
+                }
+            },
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [-74.003071, 40.731008]
+                },
+                properties: {
+                    title: 'Amy’s Bread',
+                    description: '250 Bleecker St, New York, NY 10014'
+                }
+            },
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [-73.998722, 40.728907]
+                },
+                properties: {
+                    title: 'Court Street Grocers',
+                    description: '540 LaGuardia Pl, New York, NY 10012'
+                }
+            },
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [-73.990664, 40.726901]
+                },
+                properties: {
+                    title: 'Miscelanea',
+                    description: '63 E 4th St, New York, NY 10003'
+                }
+            },
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [-73.995295, 40.720375]
+                },
+                properties: {
+                    title: 'Egg Shop',
+                    description: '151 Elizabeth St, New York, NY 10012'
+                }
+            },
+        ]
+    };
+    // add markers to map
+    geojson.features.forEach(function(marker) {
+
+        // create a HTML element for each feature
+        var el = document.createElement('div');
+        el.className = 'marker';
+
+        // make a marker for each feature and add to the map  
+        new mapboxgl.Marker(el)
+            .setLngLat(marker.geometry.coordinates)
+            .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+                .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
+            .addTo(map);
+    });
+    </script>
+</body>
+
+</html>
